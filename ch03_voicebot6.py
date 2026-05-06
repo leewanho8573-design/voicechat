@@ -72,7 +72,7 @@ def main():
 
     # 기본 설정
     st.set_page_config(
-        page_title="호 음성 비서 프로그램",
+        page_title="음성 비서 프로그램",
         layout="wide")
 
     # 제목
