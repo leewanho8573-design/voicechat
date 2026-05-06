@@ -1,4 +1,4 @@
-# 음성 비서 프로그램 (Streamlit 네이티브 위젯 버전)
+# 음성 비서 프로그램
 
 # Streamlit 패키지 추가
 import streamlit as st
@@ -105,7 +105,7 @@ def main():
         """
         )
 
-    # session state 초기화 (예제 3.9)
+    # session state 초기화
     # chat: 화면에 보여줄 채팅 기록 [(sender, time, message), ...]
     if "chat" not in st.session_state:
         st.session_state["chat"] = []
@@ -189,7 +189,7 @@ def main():
         with col1:
             st.audio(audio)
 
-        # 음원 파일에서 텍스트 추출 (예제 3.11)
+        # 음원 파일에서 텍스트 추출
         question = STT(audio, st.session_state["OPENAI_API"])
 
         # 채팅을 시각화하기 위해 질문 내용 저장
@@ -198,7 +198,7 @@ def main():
         # GPT 모델에 넣을 프롬프트를 위해 질문 내용 저장
         st.session_state["messages"].append({"role": "user", "content": question})
 
-        # ChatGPT에게 답변 얻기 (예제 3.12)
+        # ChatGPT에게 답변 얻기
         response = ask_gpt(
             st.session_state["messages"],
             model,
@@ -240,8 +240,8 @@ def main():
                 )
                 st.write("")
 
-        # gTTS를 활용하여 음성 파일 생성 및 재생 (예제 3.14)
-        # 새 녹음+답변일 때만 TTS 실행 (rerun마다 음성 재생 방지)
+        # gTTS를 활용하여 음성 파일 생성 및 재생
+        # 새 녹음+답변일 때만 TTS 실행
         if new_audio and len(st.session_state["chat"]) > 0:
             # 가장 최근 봇 답변 찾기
             last_bot_msg = next(
