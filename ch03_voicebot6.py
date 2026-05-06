@@ -105,9 +105,7 @@ def main():
         st.session_state["messages"] = [
             {"role": "system", "content": SYSTEM_PROMPT}
         ]
-
-    # [FIX 1] 검사 키와 초기화 키를 일치시킴
-    # 원본: if "check_audio" not in ... → 매번 check_reset이 False로 덮어써지는 버그
+        
     if "check_reset" not in st.session_state:
         st.session_state["check_reset"] = False
 
@@ -122,9 +120,7 @@ def main():
 
         st.markdown("---")
 
-        # [FIX 4] 최신 모델로 교체
-        # 원본의 gpt-4, gpt-3.5-turbo도 호출은 되지만 비용/성능 면에서 비효율적
-        model = st.radio(label="GPT 모델", options=["gpt-4o", "gpt-4o-mini"])
+        model = st.radio(label="GPT 모델", options=["gpt-4", "gpt-3.5-turbo"])
 
         st.markdown("---")
 
@@ -145,7 +141,7 @@ def main():
         # 음성 녹음 아이콘 추가 (예제 3.10)
         audio = audiorecorder("클릭하여 녹음하기", "녹음 중...")
 
-        # [FIX 3] duration_seconds 대신 len(audio) 사용 (ms 단위, 0보다 크면 녹음됨)
+        
         if (len(audio) > 0) and (st.session_state["check_reset"] is False):
             # [FIX 6] API 키 가드
             if not st.session_state["OPENAI_API"]:
@@ -177,8 +173,6 @@ def main():
                 st.session_state["OPENAI_API"]
             )
 
-            # [FIX 2] GPT 답변은 "assistant" role로 저장 (OpenAI 스펙 준수)
-            # 원본: "system" → 대화가 길어질수록 컨텍스트가 깨지는 문제 있음
             st.session_state["messages"] = st.session_state["messages"] + [
                 {"role": "assistant", "content": response}
             ]
