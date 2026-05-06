@@ -1,4 +1,4 @@
-# 음성 비서 프로그램
+# 내가 만드는 음성 비서 프로그램
 
 import streamlit as st
 # audiorecorder 패키지 추가
